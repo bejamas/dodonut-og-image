@@ -1,13 +1,14 @@
 {
   "private": true,
   "engines": {
-    "node": "14.x"
+    "node": "18.x"
   },
   "scripts": {
     "build": "tsc -p web/tsconfig.json"
   },
   "dependencies": {
     "chrome-aws-lambda": "7.0.0",
+    "html-minifier": "4.0.0",
     "marked": "4.0.10",
     "puppeteer-core": "13.1.2",
     "twemoji": "13.0.1"

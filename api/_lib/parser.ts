@@ -5,10 +5,16 @@ import { ParsedRequest, Theme } from './types';
 export function parseRequest(req: IncomingMessage) {
     console.log('HTTP ' + req.url);
     const { pathname, query } = parse(req.url || '/', true);
-    const { fontSize, images, widths, heights, theme, md } = (query || {});
+    const { fontSize, background, dodo, images, widths, heights, theme, md } = (query || {});
 
     if (Array.isArray(fontSize)) {
         throw new Error('Expected a single fontSize');
+    }
+    if (Array.isArray(background)) {
+        throw new Error('Expected a single background');
+    }
+    if (Array.isArray(dodo)) {
+        throw new Error('Expected a single dodo');
     }
     if (Array.isArray(theme)) {
         throw new Error('Expected a single theme');
@@ -30,6 +36,8 @@ export function parseRequest(req: IncomingMessage) {
         fileType: extension === 'jpeg' ? extension : 'png',
         text: decodeURIComponent(text),
         theme: theme === 'dark' ? 'dark' : 'light',
+        background: background || '#fff',
+        dodo: dodo || '1',
         md: md === '1' || md === 'true',
         fontSize: fontSize || '96px',
         images: getArray(images),
@@ -52,8 +60,8 @@ function getArray(stringOrArray: string[] | string | undefined): string[] {
 
 function getDefaultImages(images: string[], theme: Theme): string[] {
     const defaultImage = theme === 'light'
-        ? 'https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-black.svg'
-        : 'https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-white.svg';
+        ? 'https://dodonut.pages.dev/static/logo/black.svg'
+        : 'https://dodonut.pages.dev/static/logo/white.svg';
 
     if (!images || !images[0]) {
         return [defaultImage];
